@@ -1,0 +1,137 @@
+* {box-sizing: border-box;}
+
+ul, li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: url('http://cdn7.staztic.com/app/a/2513/2513219/weather-live-hd-wallpapers-2-4-s-307x512.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.search {
+	margin: 1.5em auto 0 auto;
+	width: 23em;
+	height: 1.4em;
+}
+
+.search input, .search button {
+	height: 2em;
+	border: 1px solid gainsboro;
+	margin: 0;
+}
+
+.search input {
+	width: 20em;
+	padding-left: 0.5em;
+	outline: none;
+}
+
+.search button {
+	width: 2em;
+	background-color: #3b78e7;
+	border: 0;
+	padding: auto;
+}
+
+#autoCompResults {
+	width: 20em;
+	margin: 0;
+	padding-left: 0.5em;
+	background-color: #fff;
+	border: 0.25px solid #fff;
+}
+
+#autoCompResults li {
+	cursor: pointer;
+}
+
+#autoCompResults li:hover {
+	background-color: #f2f2f2;
+}
+
+.main {
+	width: 40em;
+	height: 29em;
+	border: 1px solid #cce6ff;
+	border-radius: 0.15em;
+	border-style: outset;
+	margin: 3em auto;
+	padding: 1em;
+	background-color: #fff;
+}
+
+#wtrDscrp {
+	margin-bottom: 1em;
+}
+
+#temp, #misc {
+	width: 50%;
+	height: 7em;
+	display: inline-block;
+}
+
+#location, #day, #wtrDscrp {
+	padding: 0.1em;
+	text-transform: capitalize;
+}
+
+.humidity, .wind {
+	padding: 0.2em;
+}
+
+#location {
+	font-size: 1.5em;
+	font-weight: 500;
+}
+
+#icon, #icon img {
+	height: 4.5em;
+	width: 4.5em;
+}
+
+#icon {
+	float: left;
+}
+
+#tmp {
+	width: 4.5em;
+	height: 4.5em;
+	margin: 0;
+	display: inline-block;
+}
+
+#deg {
+	width: 4em;
+	height: 1.3em;
+	display: inline-block;
+	position: relative;
+	top: -1.8em;
+	margin: 0;
+}
+
+#tmp span {
+	font-size: 4em;
+	font-weight: 500;
+}
+
+#temp {
+	float: left;
+}
+
+#hrForecast {
+	height: 8em;
+	margin: 0 auto;
+}
+
+#dayForecast {
+	height: 8em;
+	margin: 0 auto;
+}
+
+.hidden {
+	display: none;
+}
