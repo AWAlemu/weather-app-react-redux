@@ -1,5 +1,7 @@
 var React = require('react');
 
+var AutoCompleteResults = require('./auto-complete');
+
 var Search = React.createClass({
 	getInitalState: function() {
 		return {
@@ -13,9 +15,14 @@ var Search = React.createClass({
 	onInputChange: function(event) {
 		var inputValue = event.target.value;
 		this.setState({input: inputValue});
+		
 		this.getLocation(inputValue);
 	},
 	getLocation: function(adrs) {
+	    var callback = function(array) {
+	    	this.setState({location: array});
+	    };
+	    var cb = callback.bind(this);
 	    var params = {
 	        address: adrs,
 	        key: 'AIzaSyBflgBDGxIWpqwAjzvQYOVjQ_dVd6QCXDQ',
@@ -29,8 +36,7 @@ var Search = React.createClass({
 	            .done(function(data) {
 	                $('#autoCompResults').removeClass('hidden');
 	                var array = data.results;
-	                console.log(this.state.location);
-	                this.setState({location: array});
+	                cb(array);
 	            })
 	            .fail(function(jqXHR, error) {
 	                var errorElem = showError(error);
@@ -41,15 +47,28 @@ var Search = React.createClass({
 	        $('#autoCompResults').addClass('hidden').children().empty();
 	    }
 	},
+	// onAddressSelect: function(event) {
+	// 	console.log(event.target);
+	// 	console.log(event.target.id);
+	// 	event.preventDefault();
+	// 	//var key = event.target.key;
+	// 	//console.log(key);
+	// },
 	render: function() {
+		if (this.state) {
+			console.log('inside this.state');
+			var results = (this.state.location || []);
+		} else {
+			var results = [];
+		}
 		return(
 			<form className="city" autocomplete="off" id="userInput">
 		        <div className="search">
 		            <input onChange={this.onInputChange} type="text" name="city" id="autocomplete" placeholder="Search weather by city, ZIP" required/>
-		            <button onClick={this.onSearchClick} type="submit"><i className="fa fa-search"></i></button>
-			        <div id="autoCompResults" className='hidden'>
-			        	<ul></ul>
-			   		</div>
+		            <button onClick={this.onSearchClick}>
+		            	<i className="fa fa-search"></i>
+		            </button>
+			        <AutoCompleteResults results={results} onAddressSelect={this.onAddressSelect}/>
 			   	</div>
 		    </form>
 		);

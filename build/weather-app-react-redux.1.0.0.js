@@ -50,7 +50,7 @@
 	var ReactDOM = __webpack_require__(34);
 	
 	var Search = __webpack_require__(172);
-	var Weather = __webpack_require__(173);
+	var Weather = __webpack_require__(174);
 	
 	var App = React.createClass({
 		displayName: 'App',
@@ -21444,6 +21444,8 @@
 	
 	var React = __webpack_require__(1);
 	
+	var AutoCompleteResults = __webpack_require__(173);
+	
 	var Search = React.createClass({
 		displayName: 'Search',
 	
@@ -21459,9 +21461,14 @@
 		onInputChange: function onInputChange(event) {
 			var inputValue = event.target.value;
 			this.setState({ input: inputValue });
+	
 			this.getLocation(inputValue);
 		},
 		getLocation: function getLocation(adrs) {
+			var callback = function callback(array) {
+				this.setState({ location: array });
+			};
+			var cb = callback.bind(this);
 			var params = {
 				address: adrs,
 				key: 'AIzaSyBflgBDGxIWpqwAjzvQYOVjQ_dVd6QCXDQ'
@@ -21474,8 +21481,7 @@
 				}).done(function (data) {
 					$('#autoCompResults').removeClass('hidden');
 					var array = data.results;
-					console.log(this.state.location);
-					this.setState({ location: array });
+					cb(array);
 				}).fail(function (jqXHR, error) {
 					var errorElem = showError(error);
 					console.log('Location API call failed');
@@ -21485,7 +21491,20 @@
 				$('#autoCompResults').addClass('hidden').children().empty();
 			}
 		},
+		// onAddressSelect: function(event) {
+		// 	console.log(event.target);
+		// 	console.log(event.target.id);
+		// 	event.preventDefault();
+		// 	//var key = event.target.key;
+		// 	//console.log(key);
+		// },
 		render: function render() {
+			if (this.state) {
+				console.log('inside this.state');
+				var results = this.state.location || [];
+			} else {
+				var results = [];
+			}
 			return React.createElement(
 				'form',
 				{ className: 'city', autocomplete: 'off', id: 'userInput' },
@@ -21495,14 +21514,10 @@
 					React.createElement('input', { onChange: this.onInputChange, type: 'text', name: 'city', id: 'autocomplete', placeholder: 'Search weather by city, ZIP', required: true }),
 					React.createElement(
 						'button',
-						{ onClick: this.onSearchClick, type: 'submit' },
+						{ onClick: this.onSearchClick },
 						React.createElement('i', { className: 'fa fa-search' })
 					),
-					React.createElement(
-						'div',
-						{ id: 'autoCompResults', className: 'hidden' },
-						React.createElement('ul', null)
-					)
+					React.createElement(AutoCompleteResults, { results: results, onAddressSelect: this.onAddressSelect })
 				)
 			);
 		}
@@ -21512,6 +21527,46 @@
 
 /***/ },
 /* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	
+	var Results = React.createClass({
+		displayName: 'Results',
+	
+		render: function render() {
+			var onAddressSelect = this.props.onAddressSelect;
+			var results = (this.props.results || []).map(function (result, i) {
+				var address = result.formatted_address;
+				var key = 's' + i;
+				return React.createElement(
+					'li',
+					{ key: key, onClick: onAddressSelect, className: 'autoCompList' },
+					React.createElement(
+						'div',
+						{ id: key },
+						address
+					)
+				);
+			});
+			return React.createElement(
+				'div',
+				{ id: 'autoCompResults', className: 'hidden' },
+				React.createElement(
+					'ul',
+					null,
+					results
+				)
+			);
+		}
+	});
+	
+	module.exports = Results;
+
+/***/ },
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
