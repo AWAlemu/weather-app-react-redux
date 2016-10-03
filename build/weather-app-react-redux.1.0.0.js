@@ -21440,30 +21440,68 @@
 /* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	var React = __webpack_require__(1);
 	
 	var Search = React.createClass({
-		displayName: "Search",
+		displayName: 'Search',
 	
+		getInitalState: function getInitalState() {
+			return {
+				input: '',
+				location: []
+			};
+		},
+		onSearchClick: function onSearchClick(event) {
+			event.preventDefault();
+		},
+		onInputChange: function onInputChange(event) {
+			var inputValue = event.target.value;
+			this.setState({ input: inputValue });
+			this.getLocation(inputValue);
+		},
+		getLocation: function getLocation(adrs) {
+			var params = {
+				address: adrs,
+				key: 'AIzaSyBflgBDGxIWpqwAjzvQYOVjQ_dVd6QCXDQ'
+			};
+			if (adrs != '') {
+				$.ajax({
+					url: 'https://maps.googleapis.com/maps/api/geocode/json',
+					data: params,
+					type: 'GET'
+				}).done(function (data) {
+					$('#autoCompResults').removeClass('hidden');
+					var array = data.results;
+					console.log(this.state.location);
+					this.setState({ location: array });
+				}).fail(function (jqXHR, error) {
+					var errorElem = showError(error);
+					console.log('Location API call failed');
+					//$('.weatherResult').append(errorElem);
+				});
+			} else {
+				$('#autoCompResults').addClass('hidden').children().empty();
+			}
+		},
 		render: function render() {
 			return React.createElement(
-				"form",
-				{ className: "city", autocomplete: "off", id: "userInput" },
+				'form',
+				{ className: 'city', autocomplete: 'off', id: 'userInput' },
 				React.createElement(
-					"div",
-					{ className: "search" },
-					React.createElement("input", { type: "text", name: "city", id: "autocomplete", placeholder: "Search weather by city, ZIP", required: true }),
+					'div',
+					{ className: 'search' },
+					React.createElement('input', { onChange: this.onInputChange, type: 'text', name: 'city', id: 'autocomplete', placeholder: 'Search weather by city, ZIP', required: true }),
 					React.createElement(
-						"button",
-						{ type: "submit" },
-						React.createElement("i", { className: "fa fa-search" })
+						'button',
+						{ onClick: this.onSearchClick, type: 'submit' },
+						React.createElement('i', { className: 'fa fa-search' })
 					),
 					React.createElement(
-						"div",
-						{ id: "autoCompResults", className: "hidden" },
-						React.createElement("ul", null)
+						'div',
+						{ id: 'autoCompResults', className: 'hidden' },
+						React.createElement('ul', null)
 					)
 				)
 			);
