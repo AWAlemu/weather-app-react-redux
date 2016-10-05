@@ -14,7 +14,7 @@ body {
 
 .search {
 	margin: 1.5em auto 0 auto;
-	width: 23em;
+	width: 30em;
 	height: 1.4em;
 }
 
@@ -25,40 +25,42 @@ body {
 }
 
 .search input {
-	width: 20em;
+	width: 32em;
 	padding-left: 0.5em;
 	outline: none;
 }
 
 .search button {
-	width: 2em;
+	width: 4em;
 	background-color: #3b78e7;
 	border: 0;
 	padding: auto;
 }
 
+.search button:hover {
+	cursor: pointer;
+}
+
 #autoCompResults {
-	width: 20em;
+	width: 30em;
 	margin: 0;
-	padding-left: 0.5em;
 	background-color: #fff;
-	border: 0.25px solid #fff;
 }
 
 #autoCompResults li {
-	cursor: pointer;
+	background: #fff;
+	margin-left: 0.1em;
+	padding: 0.1em 0em 0.1em 0.3em;
 }
 
 #autoCompResults li:hover {
 	background-color: #f2f2f2;
+	cursor: pointer;
 }
 
 .main {
 	width: 40em;
-	height: 29em;
-	border: 1px solid #cce6ff;
-	border-radius: 0.15em;
-	border-style: outset;
+	height: 11em;
 	margin: 3em auto;
 	padding: 1em;
 	background-color: #fff;

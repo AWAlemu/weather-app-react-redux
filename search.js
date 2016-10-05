@@ -1,6 +1,8 @@
 var React = require('react');
+var connect = require('react-redux').connect;
 
 var AutoCompleteResults = require('./auto-complete');
+var actions = require('./actions');
 
 var Search = React.createClass({
 	getInitalState: function() {
@@ -11,18 +13,63 @@ var Search = React.createClass({
 	},
 	onSearchClick: function(event) {
 		event.preventDefault();
+		var location = this.state.location[0];
+		var latitude = location.geometry.location.lat;
+		var longitude = location.geometry.location.lng;
+		this.getCurrent(latitude, longitude);
+		this.setState({input: '', location: []});
+	},
+	onAddressSelect: function(event) {
+		event.preventDefault();
+		var id = event.target.id;
+		var index = id.substring(1);
+		var location = this.state.location[index];
+		var lctnString = location.formatted_address;
+		this.props.dispatch(actions.setLocation(lctnString));
+		var latitude = location.geometry.location.lat;
+		var longitude = location.geometry.location.lng;
+		this.getCurrent(latitude, longitude);
+		this.setState({input: '', location: []});
 	},
 	onInputChange: function(event) {
+		if (this.state && this.state.input == '') {
+			this.props.dispatch(actions.setLocation(''));
+		}
 		var inputValue = event.target.value;
 		this.setState({input: inputValue});
-		
 		this.getLocation(inputValue);
+	},
+	getCurrent: function(lt, lng) {
+	    var callback = function(result) {
+	    	this.props.dispatch(actions.setWeather(result));
+	    };
+	    var result = callback.bind(this);
+	    
+	    var request = {
+	        lat: lt,
+	        lon: lng,
+	        APPID: '8dac38d11acbe3e6ecf035a449582cac',
+	    };
+	    $.ajax({
+	            url: 'http://api.openweathermap.org/data/2.5/weather',
+	            data: request,
+	            dataType: 'json',
+	            type: 'GET',
+	        })
+	        .done(function(data) {
+	            result(data);
+	        })
+	        .fail(function(jqXHR, error) {
+	            var errorElem = showError(error);
+	            $('.weatherResult').append(errorElem);
+	        });
 	},
 	getLocation: function(adrs) {
 	    var callback = function(array) {
 	    	this.setState({location: array});
 	    };
-	    var cb = callback.bind(this);
+	    var result = callback.bind(this);
+	    
 	    var params = {
 	        address: adrs,
 	        key: 'AIzaSyBflgBDGxIWpqwAjzvQYOVjQ_dVd6QCXDQ',
@@ -36,27 +83,18 @@ var Search = React.createClass({
 	            .done(function(data) {
 	                $('#autoCompResults').removeClass('hidden');
 	                var array = data.results;
-	                cb(array);
+	                result(array);
 	            })
 	            .fail(function(jqXHR, error) {
 	                var errorElem = showError(error);
 	                console.log('Location API call failed');
-	                //$('.weatherResult').append(errorElem);
 	            });
 	    } else {
 	        $('#autoCompResults').addClass('hidden').children().empty();
 	    }
 	},
-	// onAddressSelect: function(event) {
-	// 	console.log(event.target);
-	// 	console.log(event.target.id);
-	// 	event.preventDefault();
-	// 	//var key = event.target.key;
-	// 	//console.log(key);
-	// },
 	render: function() {
 		if (this.state) {
-			console.log('inside this.state');
 			var results = (this.state.location || []);
 		} else {
 			var results = [];
@@ -64,7 +102,7 @@ var Search = React.createClass({
 		return(
 			<form className="city" autocomplete="off" id="userInput">
 		        <div className="search">
-		            <input onChange={this.onInputChange} type="text" name="city" id="autocomplete" placeholder="Search weather by city, ZIP" required/>
+		            <input onChange={this.onInputChange} type="text" name="city" id="autocomplete" value={this.state ? this.state.input : ''} placeholder="Search weather by city, ZIP" required/>
 		            <button onClick={this.onSearchClick}>
 		            	<i className="fa fa-search"></i>
 		            </button>
@@ -75,4 +113,6 @@ var Search = React.createClass({
 	}
 });
 
-module.exports = Search;
+var Container = connect()(Search);
+
+module.exports = Container;
