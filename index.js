@@ -11,6 +11,9 @@ var App = React.createClass({
 	render: function() {
 		return (
 			<div>
+				<div className="header">
+					<h1>Weather</h1>
+				</div>
 				<Search />
 				<Weather />
 			</div>

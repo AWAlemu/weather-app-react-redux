@@ -1,0 +1,19 @@
+This is a weather app that provides the following:
+
+1, Autocomplete search results for location
+2, Dynamiaclly render weather data
+
+Tech Used:
+
+1, React
+2, React-DOM
+3, Redux
+4, React-Redux
+5, Webpack
+6, Chokidar
+7, Babel-core
+8, Ajax
+9, JQuery
+10, JavaScript
+11, HTML
+12, CSS
