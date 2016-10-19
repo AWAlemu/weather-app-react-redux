@@ -51,7 +51,7 @@ var Search = React.createClass({
 	        APPID: '8dac38d11acbe3e6ecf035a449582cac',
 	    };
 	    $.ajax({
-	            url: 'http://api.openweathermap.org/data/2.5/weather',
+	            url: 'https://api.openweathermap.org/data/2.5/weather',
 	            crossDomain: true,
 	            data: request,
 	            dataType: 'jsonp',
