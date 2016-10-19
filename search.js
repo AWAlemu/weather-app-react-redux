@@ -54,7 +54,7 @@ var Search = React.createClass({
 	            url: 'http://api.openweathermap.org/data/2.5/weather',
 	            crossDomain: true,
 	            data: request,
-	            dataType: 'json',
+	            dataType: 'jsonp',
 	            type: 'GET',
 	        })
 	        .done(function(data) {
