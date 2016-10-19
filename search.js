@@ -51,7 +51,7 @@ var Search = React.createClass({
 	        APPID: '8dac38d11acbe3e6ecf035a449582cac',
 	    };
 	    $.ajax({
-	            url: '//api.openweathermap.org/data/2.5/weather',
+	            url: 'http://api.openweathermap.org/data/2.5/weather',
 	            data: request,
 	            dataType: 'json',
 	            type: 'GET',
@@ -60,8 +60,7 @@ var Search = React.createClass({
 	            result(data);
 	        })
 	        .fail(function(jqXHR, error) {
-	            var errorElem = showError(error);
-	            $('.weatherResult').append(errorElem);
+	            console.log('Weather API call failed', error);
 	        });
 	},
 	getLocation: function(adrs) {
@@ -86,8 +85,7 @@ var Search = React.createClass({
 	                result(array);
 	            })
 	            .fail(function(jqXHR, error) {
-	                var errorElem = showError(error);
-	                console.log('Location API call failed');
+	                console.log('Location API call failed', error);
 	            });
 	    } else {
 	        $('#autoCompResults').addClass('hidden').children().empty();
