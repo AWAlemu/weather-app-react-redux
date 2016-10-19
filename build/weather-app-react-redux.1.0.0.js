@@ -23328,7 +23328,7 @@
 				APPID: '8dac38d11acbe3e6ecf035a449582cac'
 			};
 			$.ajax({
-				url: 'api.openweathermap.org/data/2.5/weather',
+				url: '//api.openweathermap.org/data/2.5/weather',
 				data: request,
 				dataType: 'json',
 				type: 'GET'
