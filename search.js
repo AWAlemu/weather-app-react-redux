@@ -50,23 +50,20 @@ var Search = React.createClass({
 	        lon: lng,
 	        APPID: '8dac38d11acbe3e6ecf035a449582cac',
 	    };
-	    $.getJSON('http://api.openweathermap.org/data/2.5/weather?lat=' + request.lat + '&lon=' + request.lon + '&APPID=' + request.APPID, function(data) {
-	    	console.log(data);
-	    	result(data);
-	    });
-	    // $.ajax({
-	    //         url: 'http://api.openweathermap.org/data/2.5/weather',
-	    //         crossDomain: true,
-	    //         data: request,
-	    //         dataType: 'json',
-	    //         type: 'GET',
-	    //     })
-	    //     .done(function(data) {
-	    //         result(data);
-	    //     })
-	    //     .fail(function(jqXHR, error) {
-	    //         console.log('Weather API call failed', error);
-	    //     });
+	    $.ajax({
+	            url: 'http://api.openweathermap.org/data/2.5/weather',
+	            crossDomain: true,
+	            data: request,
+	            dataType: 'jsonp',
+	            type: 'GET',
+				jsonpCallback: 'result',
+	        })
+	        .done(function(data) {
+	            result(data);
+	        })
+	        .fail(function(jqXHR, error) {
+	            console.log('Weather API call failed', error);
+	        });
 	},
 	getLocation: function(adrs) {
 	    var callback = function(array) {
@@ -103,7 +100,7 @@ var Search = React.createClass({
 			var results = [];
 		}
 		return(
-			<form className="city" autocomplete="off" id="userInput">
+			<form className="city" id="userInput">
 		        <div className="search">
 		            <input onChange={this.onInputChange} type="text" name="city" id="autocomplete" value={this.state ? this.state.input : ''} placeholder="Search weather by city, ZIP" required/>
 		            <button onClick={this.onSearchClick}>

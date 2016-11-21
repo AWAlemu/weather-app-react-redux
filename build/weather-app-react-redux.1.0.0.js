@@ -23327,23 +23327,18 @@
 				lon: lng,
 				APPID: '8dac38d11acbe3e6ecf035a449582cac'
 			};
-			$.getJSON('http://api.openweathermap.org/data/2.5/weather?lat=' + request.lat + '&lon=' + request.lon + '&APPID=' + request.APPID, function (data) {
-				console.log(data);
+			$.ajax({
+				url: 'http://api.openweathermap.org/data/2.5/weather',
+				crossDomain: true,
+				data: request,
+				dataType: 'jsonp',
+				type: 'GET',
+				jsonpCallback: 'result'
+			}).done(function (data) {
 				result(data);
+			}).fail(function (jqXHR, error) {
+				console.log('Weather API call failed', error);
 			});
-			// $.ajax({
-			//         url: 'http://api.openweathermap.org/data/2.5/weather',
-			//         crossDomain: true,
-			//         data: request,
-			//         dataType: 'json',
-			//         type: 'GET',
-			//     })
-			//     .done(function(data) {
-			//         result(data);
-			//     })
-			//     .fail(function(jqXHR, error) {
-			//         console.log('Weather API call failed', error);
-			//     });
 		},
 		getLocation: function getLocation(adrs) {
 			var callback = function callback(array) {
@@ -23379,7 +23374,7 @@
 			}
 			return React.createElement(
 				'form',
-				{ className: 'city', autocomplete: 'off', id: 'userInput' },
+				{ className: 'city', id: 'userInput' },
 				React.createElement(
 					'div',
 					{ className: 'search' },
