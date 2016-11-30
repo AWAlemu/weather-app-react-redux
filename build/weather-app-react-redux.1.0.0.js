@@ -23324,17 +23324,15 @@
 	
 			var request = {
 				lat: lt,
-				lon: lng,
-				APPID: '8dac38d11acbe3e6ecf035a449582cac'
+				lon: lng
 			};
 			$.ajax({
-				url: 'http://api.openweathermap.org/data/2.5/weather',
-				crossDomain: true,
+				url: 'https://evening-river-12775.herokuapp.com',
 				data: request,
-				dataType: 'jsonp',
-				type: 'GET',
-				jsonpCallback: 'result'
+				dataType: 'json',
+				type: 'GET'
 			}).done(function (data) {
+				console.log(data);
 				result(data);
 			}).fail(function (jqXHR, error) {
 				console.log('Weather API call failed', error);

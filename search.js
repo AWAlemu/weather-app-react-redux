@@ -48,17 +48,15 @@ var Search = React.createClass({
 	    var request = {
 	        lat: lt,
 	        lon: lng,
-	        APPID: '8dac38d11acbe3e6ecf035a449582cac',
 	    };
 	    $.ajax({
-	            url: 'http://api.openweathermap.org/data/2.5/weather',
-	            crossDomain: true,
+	            url: 'https://evening-river-12775.herokuapp.com',
 	            data: request,
-	            dataType: 'jsonp',
+	            dataType: 'json',
 	            type: 'GET',
-				jsonpCallback: 'result',
 	        })
 	        .done(function(data) {
+	        	console.log(data);
 	            result(data);
 	        })
 	        .fail(function(jqXHR, error) {
