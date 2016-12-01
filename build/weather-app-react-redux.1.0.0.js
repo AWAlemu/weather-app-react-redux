@@ -23210,6 +23210,7 @@
 		state = state || initialState.weather;
 		if (action.type === actions.SET_WEATHER) {
 			var data = action.content;
+			console.log('Content of reducer', data);
 			var tmp = Math.floor(data.main.temp * 9 / 5 - 459.67);
 			var icon = 'https://openweathermap.org/img/w/' + data.weather[0].icon + '.png';
 			state = {
@@ -23332,6 +23333,7 @@
 				dataType: 'json',
 				type: 'GET'
 			}).done(function (data) {
+				console.log('Content of ajax response', data);
 				result(data);
 			}).fail(function (jqXHR, error) {
 				console.log('Weather API call failed', error);
