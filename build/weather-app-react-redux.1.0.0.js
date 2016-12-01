@@ -23327,12 +23327,11 @@
 				lon: lng
 			};
 			$.ajax({
-				url: 'https://evening-river-12775.herokuapp.com',
+				url: 'https://evening-river-12775.herokuapp.com/weather',
 				data: request,
 				dataType: 'json',
 				type: 'GET'
 			}).done(function (data) {
-				console.log(data);
 				result(data);
 			}).fail(function (jqXHR, error) {
 				console.log('Weather API call failed', error);
