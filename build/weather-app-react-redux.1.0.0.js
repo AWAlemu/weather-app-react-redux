@@ -23327,6 +23327,7 @@
 				lat: lt,
 				lon: lng
 			};
+			console.log(request.lat, request.lon);
 			$.ajax({
 				url: 'https://evening-river-12775.herokuapp.com/weather',
 				data: request,
