@@ -23325,7 +23325,6 @@
 				url: 'https://evening-river-12775.herokuapp.com/weather/' + lt + '/' + lng,
 				type: 'GET'
 			}).done(function (data) {
-				console.log('Content of ajax response', data);
 				result(data);
 			}).fail(function (jqXHR, error) {
 				console.log('Weather API call failed', error);
