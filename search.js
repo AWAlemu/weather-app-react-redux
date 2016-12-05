@@ -44,15 +44,8 @@ var Search = React.createClass({
 	    	this.props.dispatch(actions.setWeather(result));
 	    };
 	    var result = callback.bind(this);
-	    
-	    var request = {
-	        lat: lt,
-	        lon: lng,
-	    };
 	    $.ajax({
-	            url: 'https://evening-river-12775.herokuapp.com/weather',
-	            data: request,
-	            dataType: 'json',
+	            url: 'https://evening-river-12775.herokuapp.com/weather/' + lt + '/' + lng,
 	            type: 'GET',
 	        })
 	        .done(function(data) {

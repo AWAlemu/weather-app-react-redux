@@ -23210,7 +23210,6 @@
 		state = state || initialState.weather;
 		if (action.type === actions.SET_WEATHER) {
 			var data = action.content;
-			console.log('Content of reducer', data);
 			var tmp = Math.floor(data.main.temp * 9 / 5 - 459.67);
 			var icon = 'https://openweathermap.org/img/w/' + data.weather[0].icon + '.png';
 			state = {
@@ -23322,16 +23321,8 @@
 				this.props.dispatch(actions.setWeather(result));
 			};
 			var result = callback.bind(this);
-	
-			var request = {
-				lat: lt,
-				lon: lng
-			};
-			console.log(request.lat, request.lon);
 			$.ajax({
-				url: 'https://evening-river-12775.herokuapp.com/weather',
-				data: request,
-				dataType: 'json',
+				url: 'https://evening-river-12775.herokuapp.com/weather/' + lt + '/' + lng,
 				type: 'GET'
 			}).done(function (data) {
 				console.log('Content of ajax response', data);
