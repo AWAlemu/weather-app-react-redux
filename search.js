@@ -49,7 +49,6 @@ var Search = React.createClass({
 	            type: 'GET',
 	        })
 	        .done(function(data) {
-	            console.log('Content of ajax response', data);
 	            result(data);
 	        })
 	        .fail(function(jqXHR, error) {
